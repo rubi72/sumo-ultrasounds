@@ -1,16 +1,38 @@
-basic.showIcon(IconNames.Angry)
-basic.pause(5000)
-basic.showLeds(`
-    # . # # #
-    # . # . #
-    # . # . #
-    # . # . #
-    # . # # #
-    `)
-basic.forever(function () {
-    if (maqueen.Ultrasonic(PingUnit.Centimeters) <= 15 && (maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0 && maqueen.readPatrol(maqueen.Patrol.PatrolRight) == 0)) {
-        maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 255)
+radio.onReceivedNumber(function (receivedNumber) {
+    if (receivedNumber == 1) {
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOff)
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOff)
+        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CCW, 50)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CW, 50)
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOn)
+    } else if (receivedNumber == 2) {
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOff)
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOff)
+        maqueen.motorRun(maqueen.Motors.M2, maqueen.Dir.CCW, 50)
+        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 50)
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOn)
+    } else if (receivedNumber == 3) {
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOff)
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOff)
+        maqueen.motorRun(maqueen.Motors.All, maqueen.Dir.CW, 70)
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOn)
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOn)
+    } else if (receivedNumber == 4) {
+        maqueen.writeLED(maqueen.LED.LEDRight, maqueen.LEDswitch.turnOff)
+        maqueen.writeLED(maqueen.LED.LEDLeft, maqueen.LEDswitch.turnOff)
+        maqueen.motorStop(maqueen.Motors.All)
     } else {
-        maqueen.motorRun(maqueen.Motors.M1, maqueen.Dir.CW, 180)
+    	
     }
+})
+basic.showLeds(`
+    # . # . #
+    . # . # .
+    # . # . #
+    . # . # .
+    # . # . #
+    `)
+radio.setGroup(217)
+basic.forever(function () {
+	
 })
